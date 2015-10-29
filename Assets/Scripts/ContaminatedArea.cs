@@ -9,6 +9,7 @@ namespace Assets.Scripts
     {
         public TerrainType Terrain;
         public CityBuildingType CityBuilding;
+        [Range(1, int.MaxValue)]
         public int NumberOfCitizens = 10000;
 
 

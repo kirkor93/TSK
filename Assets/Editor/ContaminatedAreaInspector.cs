@@ -9,11 +9,11 @@ public class ContaminatedAreaInspector : Editor
     {
         ContaminatedArea item = (ContaminatedArea) target;
 
-        item.Terrain = (TerrainType) EditorGUILayout.EnumPopup(item.Terrain);
+        item.Terrain = (TerrainType) EditorGUILayout.EnumPopup("Terrain", item.Terrain);
         if (item.Terrain == TerrainType.City)
         {
-            item.CityBuilding = (CityBuildingType) EditorGUILayout.EnumPopup(item.CityBuilding);
-            item.NumberOfCitizens = EditorGUILayout.IntField(item.NumberOfCitizens);
+            item.CityBuilding = (CityBuildingType) EditorGUILayout.EnumPopup("CityBuilding", item.CityBuilding);
+            item.NumberOfCitizens = EditorGUILayout.IntField("NumberOfCitizens", item.NumberOfCitizens);
         }
     }
 }
