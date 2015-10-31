@@ -15,7 +15,7 @@ namespace Assets.Scripts
 
         public double Simulate(Vector3 position)
         {
-            throw new System.NotImplementedException();
+            return 1.0f;
         }
     }
 }
