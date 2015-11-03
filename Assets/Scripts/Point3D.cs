@@ -13,9 +13,9 @@ namespace Assets.Scripts
         {
             transform.localScale *= (float)size;
 
-//            Material mat = GetComponent<Renderer>().material;
-//            PointColor.a = (float) (concentration/maxConcentration);
-//            mat.color = PointColor;
+            Material mat = GetComponent<Renderer>().material;
+            PointColor.a = (float) (concentration/maxConcentration);
+            mat.color = PointColor;
         }
     }
 }

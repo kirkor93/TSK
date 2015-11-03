@@ -26,8 +26,16 @@ namespace Assets.Scripts
         public GameObject[] SimulationComponents;
         public PointTypePair[] PointPrefabs;
 
+        public Legend Gui;
+
+        public double CpMax { get; private set; }
+        public double CpMin { get; private set; }
+        
         public void Simulate()
         {
+            CpMax = 0.0f;
+            CpMin = double.MaxValue;
+
             if (SimulationComponents == null)
             {
                 Debug.LogError("There are no simulation components asigned! Fix it!");
@@ -57,7 +65,6 @@ namespace Assets.Scripts
                 DestroyImmediate(oldPoint.gameObject);
             }
 
-            double maxResult = 0.0f;
             List<KeyValuePair<Point, double>> instantiatedPoints = new List<KeyValuePair<Point, double>>();
 
             for (float x = GridRangeMin.x; x <= GridRangeMax.x; x += GridDensity)
@@ -74,9 +81,13 @@ namespace Assets.Scripts
                             result *= component.Simulate(pos);
                         }
                         result = Random.Range(0.0f, 100.0f);
-                        if (result > maxResult)
+                        if (result > CpMax)
                         {
-                            maxResult = result;
+                            CpMax = result;
+                        }
+                        else if (result < CpMin)
+                        {
+                            CpMin = result;
                         }
 
 
@@ -91,8 +102,10 @@ namespace Assets.Scripts
 
             foreach (KeyValuePair<Point, double> point in instantiatedPoints)
             {
-                point.Key.Draw(point.Value, maxResult, GridDensity);
+                point.Key.Draw(point.Value, CpMax, GridDensity);
             }
+
+            Gui.Refresh(this);
         }
     }
 }

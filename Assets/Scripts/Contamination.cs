@@ -13,5 +13,16 @@ namespace Assets.Scripts
         {
             return 1.0f;
         }
+
+        protected void OnValidate()
+        {
+            Vector3 pos = transform.position;
+            pos.y = (float)EmissionHeight / 2.0f;
+            transform.position = pos;
+
+            Vector3 scale = transform.localScale;
+            scale.y = (float) EmissionHeight/2.0f;
+            transform.localScale = scale;
+        }
     }
 }

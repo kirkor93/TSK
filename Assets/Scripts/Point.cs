@@ -25,7 +25,8 @@ namespace Assets.Scripts
 
             SpriteRenderer ren = GetComponent<SpriteRenderer>();
             ren.sprite = _sprite;
-            PointColor.a = (float)(concentration/maxConcentration);
+            PointColor = Color.Lerp(Color.white, PointColor, (float) (concentration/maxConcentration));
+//            PointColor.a = (float)(concentration/maxConcentration);
             ren.color = PointColor;
         }
 

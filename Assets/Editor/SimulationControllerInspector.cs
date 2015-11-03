@@ -1,4 +1,5 @@
-﻿using Assets.Scripts;
+﻿using System.Globalization;
+using Assets.Scripts;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,5 +18,14 @@ public class SimulationControllerInspector : Editor
         {
             item.Simulate();
         }
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+        EditorGUILayout.LabelField("Results");
+        EditorGUILayout.Separator();
+        CultureInfo info = CultureInfo.InvariantCulture;
+        EditorGUILayout.LabelField("Max Cp:", item.CpMax.ToString("G", info));
+        EditorGUILayout.LabelField("Min Cp:", item.CpMin.ToString("G", info));
     }
 }
