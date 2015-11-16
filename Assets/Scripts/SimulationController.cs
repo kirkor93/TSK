@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEngine;
 
@@ -31,6 +32,8 @@ namespace Assets.Scripts
 
         public Legend Gui;
         public Camera SceneCamera;
+        public SpriteRenderer ScaleBar;
+        public TextMesh ScaleValue;
 
         public double CpMax { get; private set; }
         public double CpMin { get; private set; }
@@ -107,6 +110,16 @@ namespace Assets.Scripts
             {
                 point.Key.Draw(point.Value, CpMax, GridDensity);
             }
+
+            float targetScale = Math.Min(GridRangeMax.x, GridRangeMax.z);
+            float barScale = 1.0f;
+            while (barScale < targetScale)
+            {
+                barScale *= 10.0f;
+            }
+            barScale /= 10.0f;
+            ScaleBar.transform.localScale = Vector3.one*barScale;
+            ScaleValue.text = barScale.ToString("G", CultureInfo.InvariantCulture) + " m";
 
             SceneCamera.orthographicSize = Math.Max(GridRangeMax.x, GridRangeMax.z);
 

@@ -35,7 +35,7 @@ namespace Assets.Scripts
             Texture2D tex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
             tex.SetPixel(0, 0, new Color(1.0f, 1.0f, 1.0f, 1.0f));
             tex.SetPixel(0, 0, PointColor);
-            _sprite = Sprite.Create(tex, new Rect(Vector2.zero, Vector2.one), Vector2.zero);
+            _sprite = Sprite.Create(tex, new Rect(Vector2.zero, Vector2.one), Vector2.one * 0.5f);
         }
     }
 }
