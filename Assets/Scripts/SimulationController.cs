@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scripts
 {
@@ -22,11 +22,15 @@ namespace Assets.Scripts
         public float GridDensity = 1.0f;
         public SimulationType Type = SimulationType.TwoDimensional;
         public float SectionHeight = 50.0f;
+        public float SectionHeightMax = 1000.0f;
+        public float SectionHeightStep = 50.0f;
+        public float SimulationTimeInterval = 5.0f;
 
         public GameObject[] SimulationComponents;
         public PointTypePair[] PointPrefabs;
 
         public Legend Gui;
+        public Camera SceneCamera;
 
         public double CpMax { get; private set; }
         public double CpMin { get; private set; }
@@ -80,7 +84,6 @@ namespace Assets.Scripts
                         {
                             result *= component.Simulate(pos);
                         }
-                        result = Random.Range(0.0f, 100.0f);
                         if (result > CpMax)
                         {
                             CpMax = result;
@@ -105,7 +108,30 @@ namespace Assets.Scripts
                 point.Key.Draw(point.Value, CpMax, GridDensity);
             }
 
+            SceneCamera.orthographicSize = Math.Max(GridRangeMax.x, GridRangeMax.z);
+
             Gui.Refresh(this);
+        }
+
+        protected void Awake()
+        {
+            StartCoroutine(SimulateLoop());
+        }
+
+        private IEnumerator SimulateLoop()
+        {
+            SectionHeight = 0.0f;
+            while (true)
+            {
+                Simulate();
+
+                SectionHeight += SectionHeightStep;
+                if (SectionHeight > SectionHeightMax)
+                {
+                    SectionHeight = 0.0f;
+                }
+                yield return new WaitForSeconds(SimulationTimeInterval);
+            }
         }
     }
 }

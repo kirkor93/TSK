@@ -11,7 +11,7 @@ namespace Assets.Scripts
 
         public double Simulate(Vector3 position)
         {
-            return 1.0f;
+            return EmissionIntensity/(2.0f*Mathf.PI);
         }
 
         protected void OnValidate()
@@ -22,6 +22,7 @@ namespace Assets.Scripts
 
             Vector3 scale = transform.localScale;
             scale.y = (float) EmissionHeight/2.0f;
+            scale.x = scale.z = scale.y*0.5f;
             transform.localScale = scale;
         }
     }
