@@ -19,7 +19,6 @@ namespace Assets.Scripts
             CpMinText.text = simulationController.CpMin.ToString("e2", info);
             CpMaxText.text = simulationController.CpMax.ToString("e2", info);
             HeightText.text = string.Format("Wysokość: {0}m ", simulationController.SectionHeight.ToString("G", info));
-
         }
     }
 }

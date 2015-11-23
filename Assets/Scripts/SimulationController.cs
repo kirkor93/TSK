@@ -121,11 +121,6 @@ namespace Assets.Scripts
             Gui.Refresh(this);
         }
 
-//        public void Awake()
-//        {
-//            StartSimulation();
-//        }
-        
         public void StartSimulation()
         {
             StartCoroutine(SimulateLoop());
