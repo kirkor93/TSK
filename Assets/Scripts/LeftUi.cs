@@ -51,5 +51,20 @@ namespace Assets.Scripts
             }
             Simulator.GridDensity = value;
         }
+
+        public void SectionDensityField(string text)
+        {
+            float value = 0;
+            try
+            {
+                value = Convert.ToSingle(text);
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Wrong number in field");
+                return;
+            }
+            Simulator.SectionHeightStep = value;
+        }
     }
 }

@@ -34,16 +34,20 @@ namespace Assets.Scripts
         public Camera SceneCamera;
         public SpriteRenderer ScaleBar;
         public TextMesh ScaleValue;
+        public Transform Source;
 
         public double CpMax { get; private set; }
         public double CpMin { get; private set; }
 
         public bool IsSimulating { get; private set; }
-        
+
         public void Simulate()
         {
-            CpMax = 0.0f;
+//            CpMax = 0.01f;
+//            CpMin = 0.0f;
+
             CpMin = double.MaxValue;
+            CpMax = 0.0f;
 
             if (SimulationComponent == null)
             {
@@ -91,7 +95,6 @@ namespace Assets.Scripts
                             CpMin = result;
                         }
 
-
                         GameObject point = Instantiate(pointPrefab.gameObject);
                         Point pointComponent = point.GetComponent<Point>();
                         pointComponent.SetPosition(pos);
@@ -100,6 +103,15 @@ namespace Assets.Scripts
                     }
                 }
             }
+
+            double scaledCpMax = 0.00000001f;
+            while (scaledCpMax < CpMax)
+            {
+                scaledCpMax *= 10.0f;
+            }
+            scaledCpMax /= 10.0f;
+            CpMax = scaledCpMax;
+
 
             foreach (KeyValuePair<Point, double> point in instantiatedPoints)
             {
@@ -115,6 +127,7 @@ namespace Assets.Scripts
             barScale /= 10.0f;
             ScaleBar.transform.localScale = Vector3.one*barScale;
             ScaleValue.text = barScale.ToString("G", CultureInfo.InvariantCulture) + " m";
+            Source.localScale = Vector3.one*barScale * 0.4f;
 
             SceneCamera.orthographicSize = Math.Max(GridRangeMax.x, GridRangeMax.z);
 
@@ -123,8 +136,17 @@ namespace Assets.Scripts
 
         public void StartSimulation()
         {
-            StartCoroutine(SimulateLoop());
-            IsSimulating = true;
+            if (Type == SimulationType.TwoDimensional
+                && (SimulationComponent.GetComponent<GasSimulator>() != null))
+            {
+                StartCoroutine(SimulateLoop());
+                IsSimulating = true;
+            }
+            else
+            {
+                SectionHeight = 0.0f;
+                Simulate();
+            }
         }
 
         public void StopSimulation()
@@ -147,6 +169,11 @@ namespace Assets.Scripts
                 }
                 yield return new WaitForSeconds(SimulationTimeInterval);
             }
+        }
+
+        public double Simulate(Vector3 position)
+        {
+            throw new NotImplementedException();
         }
     }
 }
