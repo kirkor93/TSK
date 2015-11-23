@@ -27,7 +27,7 @@ namespace Assets.Scripts
         public float SectionHeightStep = 50.0f;
         public float SimulationTimeInterval = 5.0f;
 
-        public GameObject[] SimulationComponents;
+        public GameObject SimulationComponent;
         public PointTypePair[] PointPrefabs;
 
         public Legend Gui;
@@ -37,26 +37,25 @@ namespace Assets.Scripts
 
         public double CpMax { get; private set; }
         public double CpMin { get; private set; }
+
+        public bool IsSimulating { get; private set; }
         
         public void Simulate()
         {
             CpMax = 0.0f;
             CpMin = double.MaxValue;
 
-            if (SimulationComponents == null)
+            if (SimulationComponent == null)
             {
                 Debug.LogError("There are no simulation components asigned! Fix it!");
                 return;
             }
 
-            ISimulationComponent[] simulationComponents = new ISimulationComponent[SimulationComponents.Length];
+            ISimulationComponent simulationComponent = SimulationComponent.GetComponent(typeof(ISimulationComponent)) as ISimulationComponent;
 
-            for (int i = 0; i < SimulationComponents.Length; i++)
+            if (simulationComponent == null)
             {
-                if (SimulationComponents[i] != null)
-                {
-                    simulationComponents[i] = (ISimulationComponent) SimulationComponents[i].GetComponent(typeof(ISimulationComponent));
-                }
+                Debug.LogError("No simulation component assigned. Fix it");
             }
 
             if (Type == SimulationType.TwoDimensional)
@@ -82,11 +81,7 @@ namespace Assets.Scripts
                     {
                         Vector3 pos = new Vector3(x, y, z);
 
-                        double result = 1.0f;
-                        foreach (ISimulationComponent component in simulationComponents)
-                        {
-                            result *= component.Simulate(pos);
-                        }
+                        double result = simulationComponent.Simulate(pos);
                         if (result > CpMax)
                         {
                             CpMax = result;
@@ -108,7 +103,7 @@ namespace Assets.Scripts
 
             foreach (KeyValuePair<Point, double> point in instantiatedPoints)
             {
-                point.Key.Draw(point.Value, CpMax, GridDensity);
+                point.Key.Draw(point.Value, CpMax, GridDensity, simulationComponent.PointColor);
             }
 
             float targetScale = Math.Min(GridRangeMax.x, GridRangeMax.z);
@@ -126,9 +121,21 @@ namespace Assets.Scripts
             Gui.Refresh(this);
         }
 
-        protected void Awake()
+//        public void Awake()
+//        {
+//            StartSimulation();
+//        }
+        
+        public void StartSimulation()
         {
             StartCoroutine(SimulateLoop());
+            IsSimulating = true;
+        }
+
+        public void StopSimulation()
+        {
+            StopAllCoroutines();
+            IsSimulating = false;
         }
 
         private IEnumerator SimulateLoop()
