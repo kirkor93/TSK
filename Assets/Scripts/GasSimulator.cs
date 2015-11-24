@@ -8,7 +8,7 @@ namespace Assets.Scripts
     public enum TimeOfYearType { Year, Winter, Summer }
     public enum AtmosphereConditionType { HighlyUnstable, Unstable, SlightlyUnstable, Indifferent, AlmostStable, Stable }
 
-    public class GasSimulator : SimulatorBase, ISimulationComponent
+    public class GasSimulator : SimulatorBase
     {
 
         public override double Simulate(Vector3 position)

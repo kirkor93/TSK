@@ -6,7 +6,7 @@ namespace Assets.Scripts
 {
     public class GasUi : MonoBehaviour
     {
-        public GasSimulator Simulator;
+        public SimulatorBase Simulator;
         public RectTransform CityBuildingListObject;
         public RectTransform CitizensNumberObject;
         public Text ValueText;
@@ -65,6 +65,26 @@ namespace Assets.Scripts
         {
             Simulator.EmissionIntensity = value;
             ValueText.text = value.ToString("G", CultureInfo.InvariantCulture);
+        }
+
+        public void BetaAngleSlider(float value)
+        {
+            DustSimulator dust = Simulator as DustSimulator;
+            if (dust != null)
+            {
+                dust.BetaAngle = value;
+                ValueText.text = value.ToString("G", CultureInfo.InvariantCulture);
+            }
+        }
+
+        public void FallFactorSlider(float value)
+        {
+            DustSimulator dust = Simulator as DustSimulator;
+            if (dust != null)
+            {
+                dust.FallFactor = value;
+                ValueText.text = value.ToString("G", CultureInfo.InvariantCulture);
+            }
         }
     }
 }
