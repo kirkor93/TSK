@@ -129,7 +129,14 @@ namespace Assets.Scripts
             ScaleValue.text = barScale.ToString("G", CultureInfo.InvariantCulture) + " m";
             Source.localScale = Vector3.one*barScale * 0.4f;
 
-            SceneCamera.orthographicSize = Math.Max(GridRangeMax.x, GridRangeMax.z);
+            if (Type == SimulationType.TwoDimensional)
+            {
+                SceneCamera.orthographicSize = Math.Max(GridRangeMax.x, GridRangeMax.z);
+            }
+            CameraController controller = SceneCamera.GetComponent<CameraController>();
+            controller.SetView(Type);
+            SceneCamera.GetComponent<LookingAtCamera>().FasterModeMultiplier = barScale / 10.0f;
+
 
             Gui.Refresh(this);
         }

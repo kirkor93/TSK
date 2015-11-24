@@ -15,7 +15,14 @@ namespace Assets.Scripts
 
             Material mat = GetComponent<Renderer>().material;
             pointColor.a = (float) (concentration/maxConcentration);
-            mat.color = pointColor;
+            if (pointColor.a > 0)
+            {
+                mat.color = pointColor;
+            }
+            else
+            {
+                DestroyImmediate(gameObject);
+            }
         }
     }
 }

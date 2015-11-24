@@ -14,13 +14,18 @@ namespace Assets.Scripts
             if (Simulator.IsSimulating)
             {
                 Simulator.StopSimulation();
-                text.text = "Rozpocznij symulację";
+//                text.text = "Rozpocznij symulację";
             }
             else
             {
                 Simulator.StartSimulation();
-                text.text = "Przerwij symulację";
+//                text.text = "Przerwij symulację";
             }
+        }
+
+        public void QuitButton()
+        {
+            Application.Quit();
         }
     }
 }
