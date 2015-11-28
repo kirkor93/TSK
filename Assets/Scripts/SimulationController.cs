@@ -62,8 +62,12 @@ namespace Assets.Scripts
                 Debug.LogError("No simulation component assigned. Fix it");
             }
 
+            Vector3 tmp = Vector3.zero, tmp2 = Vector3.zero;
+
             if (Type == SimulationType.TwoDimensional)
             {
+                tmp = GridRangeMax;
+                tmp2 = GridRangeMin;
                 GridRangeMin.y = GridRangeMax.y = SectionHeight;
             }
 
@@ -137,6 +141,11 @@ namespace Assets.Scripts
             controller.SetView(Type);
             SceneCamera.GetComponent<LookingAtCamera>().FasterModeMultiplier = barScale / 10.0f;
 
+            if (Type == SimulationType.TwoDimensional)
+            {
+                GridRangeMax = tmp;
+                GridRangeMin = tmp2;
+            }
 
             Gui.Refresh(this);
         }
