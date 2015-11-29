@@ -7,6 +7,7 @@ namespace Assets.Scripts
 //        public Color PointColor = Color.red;
 
         private Sprite _sprite;
+        public double Cp { get; set; }
 
         public virtual void SetPosition(Vector3 position)
         {
@@ -22,6 +23,8 @@ namespace Assets.Scripts
             }
 
             transform.localScale *= 100 * (float)size;
+
+            Cp = concentration;
 
             SpriteRenderer ren = GetComponent<SpriteRenderer>();
             ren.sprite = _sprite;

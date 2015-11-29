@@ -186,10 +186,5 @@ namespace Assets.Scripts
                 yield return new WaitForSeconds(SimulationTimeInterval);
             }
         }
-
-        public double Simulate(Vector3 position)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
