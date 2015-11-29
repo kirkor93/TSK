@@ -15,6 +15,7 @@ namespace Assets.Scripts
 
             Material mat = GetComponent<Renderer>().material;
             pointColor.a = (float) (concentration/maxConcentration);
+            Cp = concentration;
             if (pointColor.a > 0)
             {
                 mat.color = pointColor;

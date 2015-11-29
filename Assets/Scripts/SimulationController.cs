@@ -108,13 +108,13 @@ namespace Assets.Scripts
                 }
             }
 
-            double scaledCpMax = 0.00000001f;
-            while (scaledCpMax < CpMax)
-            {
-                scaledCpMax *= 10.0f;
-            }
-            scaledCpMax /= 10.0f;
-            CpMax = scaledCpMax;
+//            double scaledCpMax = 0.00000001f;
+//            while (scaledCpMax < CpMax)
+//            {
+//                scaledCpMax *= 10.0f;
+//            }
+//            scaledCpMax /= 10.0f;
+//            CpMax = scaledCpMax;
 
 
             foreach (KeyValuePair<Point, double> point in instantiatedPoints)

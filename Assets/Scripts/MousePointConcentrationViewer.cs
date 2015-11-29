@@ -1,36 +1,86 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Globalization;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public class MousePointConcentrationViewer : MonoBehaviour
     {
+        public Camera SceneCamera;
+
         private int _mask;
-        private RaycastHit _hit;
-        private double _cp;
         private RectTransform _rectTransform;
+        private Text _text;
 
         protected void Awake()
         {
             _mask = LayerMask.GetMask("Point");
             _rectTransform = GetComponent<RectTransform>();
+            _text = GetComponent<Text>();
         }
 
         protected void Update()
         {
-            Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 direction = Camera.main.transform.forward;
-            if(Physics.Raycast(new Ray(origin, direction), out _hit, float.MaxValue, _mask))
+            Ray ray = SceneCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit[] hits = Physics.RaycastAll(ray, float.MaxValue, _mask);
+            double cp = 0.0f;
+            foreach (RaycastHit hit in hits)
             {
-                Point p = _hit.transform.GetComponent<Point>();
-                _cp = p.Cp;
-            }
-            else
-            {
-                _cp = 0.0f;
+                Point p = hit.transform.GetComponent<Point>();
+                if (p.Cp > cp)
+                {
+                    cp = p.Cp;
+                }
             }
 
             _rectTransform.anchoredPosition = Input.mousePosition;
+            _text.text = GetCpString(cp);
+        }
+
+        private static string GetCpString(double baseCp)
+        {
+            int steps = 0;
+            while (baseCp < 1.0f
+                && steps < 12)
+            {
+                baseCp *= 10.0f;
+                steps++;
+            }
+
+            string returnValue = "";
+
+            if (steps < 2){}
+            else if(steps < 5)
+            {
+                returnValue = "m";
+                steps -= 3;
+            }
+            else if(steps < 8)
+            {
+                returnValue = "µ";
+                steps -= 6;
+            }
+            else if(steps < 11)
+            {
+                returnValue = "n";
+                steps -= 9;
+            }
+            else
+            {
+                returnValue = "p";
+                steps -= 12;
+            }
+            returnValue += "g/m³";
+
+            for (int i = 0; i < steps; i++)
+            {
+                baseCp /= 10.0f;
+            }
+
+            baseCp = Math.Round(baseCp, 2);
+            returnValue = string.Concat(baseCp.ToString("G", CultureInfo.InvariantCulture), returnValue);
+            return returnValue;
         }
     }
 }
