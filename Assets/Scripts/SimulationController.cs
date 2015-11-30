@@ -119,7 +119,7 @@ namespace Assets.Scripts
 
             foreach (KeyValuePair<Point, double> point in instantiatedPoints)
             {
-                point.Key.Draw(point.Value, CpMax, GridDensity, simulationComponent.PointColor);
+                point.Key.Draw(point.Value, GridDensity, simulationComponent.PointColor);
             }
 
             float targetScale = Math.Min(GridRangeMax.x, GridRangeMax.z);
