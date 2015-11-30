@@ -30,11 +30,13 @@ namespace Assets.Scripts
                     transform.position = BaseTransform.position;
                     transform.rotation = BaseTransform.rotation;
                     _camera.orthographic = true;
+                    _camera.farClipPlane = 999999;
                     break;
                 case SimulationType.ThreeDimensional:
                     transform.position = Transform3D.position;
                     transform.rotation = Transform3D.rotation;
                     _camera.orthographic = false;
+                    _camera.farClipPlane = 60000;
                     break;
             }
         }

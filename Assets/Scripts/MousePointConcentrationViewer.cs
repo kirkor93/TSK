@@ -24,21 +24,29 @@ namespace Assets.Scripts
         {
             Ray ray = SceneCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hits = Physics.RaycastAll(ray, float.MaxValue, _mask);
-            double cp = 0.0f;
+            Point p = null;
             foreach (RaycastHit hit in hits)
             {
-                Point p = hit.transform.GetComponent<Point>();
-                if (p.Cp > cp)
+                Point tmp = hit.transform.GetComponent<Point>();
+                if (p == null
+                    || tmp.Cp > p.Cp)
                 {
-                    cp = p.Cp;
+                    p = tmp;
                 }
             }
 
             _rectTransform.anchoredPosition = Input.mousePosition;
-            _text.text = GetCpString(cp);
+            if (p != null)
+            {
+                _text.text = string.Format("Pozycja: {0}\nCp: {1}", p.transform.position, GetCpString(p.Cp));
+            }
+            else
+            {
+                _text.text = string.Empty;
+            }
         }
 
-        private static string GetCpString(double baseCp)
+        public static string GetCpString(double baseCp)
         {
             int steps = 0;
             while (baseCp < 1.0f

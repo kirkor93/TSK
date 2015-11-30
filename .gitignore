@@ -12,3 +12,4 @@ obj/
 *.unityproj
 *.booproj
 *.db
+Build/

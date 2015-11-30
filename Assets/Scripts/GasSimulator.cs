@@ -3,11 +3,6 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public enum TerrainType { Water, Meadow, Farmland, Orchard, Forest, Village, City }
-    public enum CityBuildingType { Small, Medium, High }
-    public enum TimeOfYearType { Year, Winter, Summer }
-    public enum AtmosphereConditionType { HighlyUnstable, Unstable, SlightlyUnstable, Indifferent, AlmostStable, Stable }
-
     public class GasSimulator : SimulatorBase
     {
 

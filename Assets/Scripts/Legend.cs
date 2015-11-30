@@ -11,16 +11,27 @@ namespace Assets.Scripts
         public Text CpMinText;
         public Text CpMaxText;
         public Text HeightText;
+        public Camera SceneCamera;
+        public SimulationController Simulator;
 
-        public void Refresh(SimulationController simulationController)
+        protected void Awake()
         {
             CultureInfo info = CultureInfo.InvariantCulture;
-            
-            CpMinText.text = simulationController.CpMin.ToString("e2", info);
-            CpMaxText.text = simulationController.CpMax.ToString("e2", info);
-            ISimulationComponent tmp = (simulationController.SimulationComponent.GetComponent(typeof(ISimulationComponent)) as ISimulationComponent);
-            CpBar.sprite = simulationController.Type == SimulationType.ThreeDimensional ? tmp.Bar3 : tmp.Bar2;
-            HeightText.text = string.Format("Wysokość: {0}m ", simulationController.SectionHeight.ToString("G", info));
+            CpMinText.text = (0.0f).ToString("G", info);
+            CpMaxText.text = MousePointConcentrationViewer.GetCpString(Point.MaxCpValue * 10.0f);
+        }
+
+        protected void Update()
+        {
+            switch (Simulator.Type)
+            {
+                case SimulationType.TwoDimensional:
+                    HeightText.text = string.Format("Symulowana wysokość: {0}", Simulator.SectionHeight);
+                    break;
+                case SimulationType.ThreeDimensional:
+                    HeightText.text = string.Format("Pozycja kamery: {0}", SceneCamera.transform.position);
+                    break;
+            }
         }
     }
 }

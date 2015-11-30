@@ -9,9 +9,8 @@ namespace Assets.Scripts
 
         private Sprite _sprite;
 
-        protected const double MaxCpValue = 0.0001f;
-        protected const double MinCpValue = 0.000000000001f;
-        protected const double LogarithmBase = 10.0f;
+        public const double MaxCpValue = 0.001f;
+        public const double MinCpValue = 0.000000000001f;
 
         public double Cp { get; set; }
 
@@ -55,7 +54,6 @@ namespace Assets.Scripts
 
         protected static double ConvertRange(double oldMin, double oldMax, double newMin, double newMax, double oldValue)
         {
-//            Debug.Log((((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin);
             return (((oldValue - oldMin)*(newMax - newMin))/(oldMax - oldMin)) + newMin;
         }
     }

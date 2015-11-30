@@ -30,7 +30,6 @@ namespace Assets.Scripts
         public GameObject SimulationComponent;
         public PointTypePair[] PointPrefabs;
 
-        public Legend Gui;
         public Camera SceneCamera;
         public SpriteRenderer ScaleBar;
         public TextMesh ScaleValue;
@@ -108,15 +107,6 @@ namespace Assets.Scripts
                 }
             }
 
-//            double scaledCpMax = 0.00000001f;
-//            while (scaledCpMax < CpMax)
-//            {
-//                scaledCpMax *= 10.0f;
-//            }
-//            scaledCpMax /= 10.0f;
-//            CpMax = scaledCpMax;
-
-
             foreach (KeyValuePair<Point, double> point in instantiatedPoints)
             {
                 point.Key.Draw(point.Value, GridDensity, simulationComponent.PointColor);
@@ -146,8 +136,6 @@ namespace Assets.Scripts
                 GridRangeMax = tmp;
                 GridRangeMin = tmp2;
             }
-
-            Gui.Refresh(this);
         }
 
         public void StartSimulation()
