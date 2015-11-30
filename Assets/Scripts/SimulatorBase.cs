@@ -23,6 +23,7 @@ namespace Assets.Scripts
         private double _windSpeed = 1.0f;
         private double _emissionHeight = 50.0f;
         private double _emissionIntensity = 1.0f;
+        private SimulationController _simulationController;
 
         public TerrainType Terrain
         {
@@ -236,6 +237,11 @@ namespace Assets.Scripts
             }
         }
 
+        protected void Awake()
+        {
+            _simulationController = FindObjectOfType<SimulationController>();
+        }
+
         private void ChangeTerrainVisual()
         {
             Debug.Log("Changing visuals");
@@ -248,14 +254,18 @@ namespace Assets.Scripts
                 o.SetActive(false);
             }
 
-            
-            if (Terrain != TerrainType.City)
+            if(_simulationController.Type == SimulationType.ThreeDimensional
+                && NormalTerrainVisuals.Length > 0
+                && CityTerrainVisuals.Length > 0)
             {
-                NormalTerrainVisuals[(int)Terrain].SetActive(true);
-            }
-            else
-            {
-                CityTerrainVisuals[(int)CityBuilding].SetActive(true);
+                if (Terrain != TerrainType.City)
+                {
+                    NormalTerrainVisuals[(int)Terrain].SetActive(true);
+                }
+                else
+                {
+                    CityTerrainVisuals[(int)CityBuilding].SetActive(true);
+                }
             }
         }
 
