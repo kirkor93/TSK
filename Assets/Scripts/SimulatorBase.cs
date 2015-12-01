@@ -9,6 +9,7 @@ namespace Assets.Scripts
 
     public abstract class SimulatorBase : MonoBehaviour, ISimulationComponent
     {
+        public Transform Source;
         public Sprite Bar2D;
         public Sprite Bar3D;
         public Color ComponentColor;
@@ -72,7 +73,11 @@ namespace Assets.Scripts
         public double EmissionHeight
         {
             get { return _emissionHeight; }
-            set { _emissionHeight = value; }
+            set
+            {
+                _emissionHeight = value;
+                Source.localScale = Vector3.one * (float)_emissionHeight;
+            }
         }
 
         public double EmissionIntensity

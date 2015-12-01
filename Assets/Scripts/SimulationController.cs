@@ -33,7 +33,6 @@ namespace Assets.Scripts
         public Camera SceneCamera;
         public SpriteRenderer ScaleBar;
         public TextMesh ScaleValue;
-        public Transform Source;
 
         public double CpMax { get; private set; }
         public double CpMin { get; private set; }
@@ -121,7 +120,7 @@ namespace Assets.Scripts
             barScale /= 10.0f;
             ScaleBar.transform.localScale = Vector3.one*barScale;
             ScaleValue.text = barScale.ToString("G", CultureInfo.InvariantCulture) + " m";
-            Source.localScale = Vector3.one*barScale * 0.4f;
+            
 
             if (Type == SimulationType.TwoDimensional)
             {
